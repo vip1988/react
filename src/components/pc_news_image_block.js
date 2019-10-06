@@ -66,7 +66,7 @@ class PCNewsImageBlock extends React.Component {
             this.state.newsInfo.map((newsItem, index) => (
                 <div key={index} className='imageBlock'>
                     
-                    <Link to={`details/${newsItem._id}`} >
+                    <Link to={`/details/${newsItem._id}`} >
                         <div className='custom-image'>
                             <img alt='' style={styleImage} src={newsItem.imagePath} />
                         </div>

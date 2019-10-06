@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route } from 'react-router-dom'
+//import { BrowserRouter, Route } from 'react-router-dom'
+import { HashRouter, Route, Link } from "react-router-dom"
 import { renderRoutes } from 'react-router-config'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
@@ -14,8 +15,8 @@ const store = createStore(reducers, applyMiddleware(Thunk))
 
 ReactDOM.render((
     <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
             {renderRoutes(routes)}
-        </BrowserRouter>
+        </HashRouter>
     </Provider>
 ), document.querySelector('#app'))

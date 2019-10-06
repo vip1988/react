@@ -18,7 +18,7 @@ const routes = [
     {
         path: '/details/:id',
         exact: true,
-        component: Details
+        component: Details,
     },
     {
         path: '/mobile_details/:id',
@@ -35,15 +35,6 @@ const routes = [
         exact: true,
         component: MobileUserCenter
     },
-    {
-        path: '/detail/:id',
-        exact: true,
-        component: Details
-       
-    }
-  
-   
-   
 ]
 
 export default routes

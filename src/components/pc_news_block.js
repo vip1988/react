@@ -38,7 +38,7 @@ class PCNewsBlock extends React.Component {
             this.state.newsInfo.map((newsItem, index) => (
                 
                 <li key={index}>
-                     <Link to={`details/${newsItem._id}`}>
+                     <Link to={`/details/${newsItem._id}`}>
                         {newsItem.title}
                     </Link>
                 </li>

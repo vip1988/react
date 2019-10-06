@@ -81,7 +81,7 @@ class PCUserCenter extends React.Component {
         console.log('444')
             const userCollectionList = userCollection.length ?
             userCollection.map((userCollection, index) => (
-                <Card key={index} title={userCollection.article_id} extra={<a href={`details/${userCollection.article_id}`}>查看</a>}>
+                <Card key={index} title={userCollection.article_id} extra={<a href={`#/details/${userCollection.article_id}`}>查看</a>}>
                     <p>{userCollection.article_title}</p>
                 </Card>
             ))

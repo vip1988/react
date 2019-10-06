@@ -49,7 +49,7 @@ export default class PCHeader extends React.Component {
             ?
 
             <Menu.Item key='logout' className='register'>
-                <Link to='userCenter'>
+                <Link to='/userCenter'>
                     <Button key='primary' htmlType='button'>個人中心</Button>
                 </Link>
                 &nbsp;&nbsp;
@@ -58,7 +58,7 @@ export default class PCHeader extends React.Component {
 
             :
             <Menu.Item key='register' className='register'>
-                <Link to='login'><Icon type="appstore" />註冊/登入</Link>
+                <Link to='/login'><Icon type="appstore" />註冊/登入</Link>
             </Menu.Item>
 
             ;

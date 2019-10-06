@@ -5,8 +5,6 @@ require('Source/less/mobile.less')
 import Index from './components/pc_index'
 import MobileIndex from './components/mobile_index'
 
-
-
 export default class Root extends React.Component {
     constructor(props) {
         super(props);
@@ -14,13 +12,6 @@ export default class Root extends React.Component {
     render() {
 
         return (
-
-          
-
-
-
-
-
 
             <div className="ui grid"> 
                 <div className="computer only row">
