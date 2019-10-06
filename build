@@ -1,0 +1,12 @@
+npm init -y
+npm i react react-dom babel-standalone -S
+npm install gulp -g
+npm install semantic-ui 
+cd semantic
+gulp build
+npm install webpack -g
+create webpack.config.js
+npm install react react-dom create-react-class -S
+npm install babel-core babel-loader babel-cli babel-preset-react -S
+npm install webpack -S
+sudo npm install babel-preset-es2017 babel-preset-stage-0 -S
