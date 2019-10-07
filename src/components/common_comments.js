@@ -44,7 +44,8 @@ class CommonComments extends React.Component {
             if (!err) {
                 var commentInfo = {
                     userAccount: 'vip1988',
-                    comment: values.comment
+                    comment: values.comment,
+                    article_id:this.props.article_id
                 }
                 this.props.dispatch(actions.comment.postComment(commentInfo))
             }

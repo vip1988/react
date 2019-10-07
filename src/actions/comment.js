@@ -11,7 +11,8 @@ const postComment = (conditions) => {
                 },
                 body: JSON.stringify({
                     userAccount: conditions.userAccount || undefined,
-                    comment: conditions.comment || undefined
+                    comment: conditions.comment || undefined,
+                    article_id: conditions.article_id || undefined
                 })
             })
 

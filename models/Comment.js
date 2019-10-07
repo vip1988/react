@@ -4,6 +4,7 @@ const collectionName = 'comment'
 var schema = mongoose.Schema({
     userAccount: String,
 	comment: String,
+	article_id:String,
 	updated: { type: Date, default: Date.now }
 })
 

@@ -72,7 +72,7 @@ class PCNewsVideoBlock extends React.Component {
                         <div className='mainVideo'>
                             <ReactPlayer
                                 url='https://www.youtube.com/watch?v=153G7QEBK1I'
-                                playing={true}
+                                playing={false}
                                 volume={0.8}
                                 width="100%"
                                 heght="100%"

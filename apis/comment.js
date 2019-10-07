@@ -25,6 +25,7 @@ const postComment = async (ctx, next) => {
         var data = {
             userAccount: payload.userAccount,
             comment: payload.comment,
+            article_id:payload.article_id
         }
         var _comment = new Comment(data)
         var error

@@ -28,7 +28,8 @@ function getBase64(file) {
 }
 const mapStateToProps = (state) => {
     return {
-        collection: state.collection
+        collection: state.collection,
+        comment: state.comment
     }
 }
 class PCUserCenter extends React.Component {
@@ -38,19 +39,23 @@ class PCUserCenter extends React.Component {
             previewVisible: false,
             previewImage: '',
             fileList: [],
-            userCollection: props.collection.collection
+            userCollection: props.collection.collection,
+            userComment: props.comment.comment
         };
     };
+
 
     componentWillMount() {
 
         this.props.dispatch(actions.collection.getCollectionList())
+        this.props.dispatch(actions.comment.getCommentList())
     }
     componentWillReceiveProps = (nextProps) => {
         this.setState({
-            userCollection: nextProps.collection.collection
-        })     
-        
+            userCollection: nextProps.collection.collection,
+            userComment: nextProps.comment.comment
+        })
+
     }
     handleCancel = () => this.setState({ previewVisible: false });
 
@@ -68,7 +73,6 @@ class PCUserCenter extends React.Component {
     handleChange = ({ fileList }) => this.setState({ fileList });
 
     render() {
-        console.log('123')
         const { previewVisible, previewImage, fileList } = this.state;
         const uploadButton = (
             <div>
@@ -76,20 +80,27 @@ class PCUserCenter extends React.Component {
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
-        console.log('333')
-        const { userCollection } = this.state;
-        console.log('444')
-            const userCollectionList = userCollection.length ?
+        const { userCollection, userComment } = this.state;
+        const userCollectionList = userCollection.length ?
             userCollection.map((userCollection, index) => (
                 <Card key={index} title={userCollection.article_id} extra={<a href={`#/details/${userCollection.article_id}`}>查看</a>}>
                     <p>{userCollection.article_title}</p>
                 </Card>
             ))
             :
-            '還沒收藏新聞,趕快開始吧'
+            '還沒收藏新聞,趕快開始吧';
 
-        
-        
+        const userCommentList = userComment.length ?
+            userComment.map((userComment, index) => (
+                <Card key={index} title={`您於${userComment.updated} 評論了文章 ${userComment.article_id}`} extra={<a href={`#/details/${userComment.article_id}`}>查看</a>}>
+                    <p>{userComment.comment}</p>
+                </Card>
+            ))
+            :
+            '還沒評論,趕快開始吧'
+
+
+
 
 
         return (
@@ -109,6 +120,13 @@ class PCUserCenter extends React.Component {
                                 </div>
                             </TabPane>
                             <TabPane tab='我的評論列表' key='2'>
+                                <div>
+                                    <Row>
+                                        <Col span={24}>
+                                            {userCommentList}
+                                        </Col>
+                                    </Row>
+                                </div>
                             </TabPane>
                             <TabPane tab='頭像設置' key='3'>
 
