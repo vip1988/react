@@ -16,11 +16,12 @@ import carousel_4 from 'Source/images/carousel_12.jpg'
 import carousel_5 from 'Source/images/carousel_11.jpg'
 import NewsBlock from './pc_news_block'
 import NewsProduct from './pc_product'
-const TabPane = Tabs.TabPane
+const { TabPane } = Tabs;
 export default class PCNewsContainer extends React.Component {
     constructor(props) {
         super(props);
     }
+
     render() {
         const setting = {
 
@@ -45,7 +46,7 @@ export default class PCNewsContainer extends React.Component {
                                     <div><img src={carousel_5} /></div>
                                 </Carousel>
                             </div>
-                        </div>                
+                        </div>
                         <Tabs className='tabs_news'>
                             <TabPane tab='頭條' key='1'>
                                 <NewsBlock counts={10} type='top' width='100%' bordered='false' />
@@ -59,14 +60,14 @@ export default class PCNewsContainer extends React.Component {
                             <TabPane tab='國際' key='4'>
                                 <NewsBlock counts={10} type='international' width='100%' bordered='false' />
                             </TabPane>
-                        </Tabs>         
+                        </Tabs>
                         {/* <Tabs className='tabs_product'>
                             <TabPane tab='產品' key='1'>
                                 <NewsProduct />
                             </TabPane>
                         </Tabs>
                         */}
-                    </Col>   
+                    </Col>
                     <Col span={2}></Col>
                 </Row>
             </div>

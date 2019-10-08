@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import actions from 'Source/actions'
-import { Link } from 'react-router-dom'
+import { Link ,Redirect} from 'react-router-dom'
 import {
     Menu, Icon, Tabs,
     message, Form, Input,
@@ -15,42 +15,28 @@ const mapStateToProps = (state) => {
         login: state.login
     }
 }
-class Entry extends React.Component {
-    render() {
-        var linkStyle = {
-            color: 'black',
-            cursor: 'pointer'
-        }
-
-        return (
-            <div className="one column row">
-                <div className="column">
-                    <Link to='/details' style={linkStyle}>
-                        <h1>{this.props.userAccount}</h1>
-                        <p>{this.props.userPassword}</p>
-                    </Link>
-                </div>
-            </div>
-        );
-    }
-}
 class PCLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loginInfo: props.login.loginInfo
+            loginInfo: props.login.loginInfo,
+            status:props.login.status,
+            userLogin:false
 
         };
     }
-    componentWillMount = () => {
-        this.props.dispatch(actions.login.getLoginInfo())
-
-
-    }
+    // componentWillMount = () => {
+    //     this.props.dispatch(actions.login.getLoginInfo())
+    // }
     componentWillReceiveProps = (nextProps) => {
         this.setState({
-            loginInfo: nextProps.login.loginInfo
+            loginInfo: nextProps.login.loginInfo,
+            status:nextProps.login.status
         })
+    }
+    checkLogin(userInfo){
+
+        this.props.dispatch(actions.login.checkLoginInfo(userInfo))   
 
     }
     handleSubmit = e => {
@@ -60,28 +46,33 @@ class PCLogin extends React.Component {
 
                 var userInfo = {
                     userAccount: values.username,
-                    userPassword: values.password
+                    userPassword: values.password,
+                    userLogin:this.state.userLogin
                 }
-               
-                this.props.dispatch(actions.login.postLoginInfo(userInfo))
+                this.checkLogin(userInfo)
+                
             }
         });
     };
     render() {
         const { getFieldDecorator } = this.props.form;
-        var entry = this.state.loginInfo.map((value, index) => {
-            if (value) {
-                return (
-                    <Entry
-                        id={value._id}
-                        userAccount={value.userAccount}
-                        userPassword={value.userPassword}
-                        key={index}
-                    />
-                )
-            }
-        })
+        console.log(this.state.status)
+        if(this.state.status=='userAccount exits')
+        {
+            alert('userAccount exits')
+        }
 
+        if(this.state.status=='check success')
+        {
+            alert('登入成功')
+            //回首頁
+           return <Redirect to={'/'} />
+        }
+        if (this.state.status=='check error')
+        {
+            alert('帳號密碼有誤')
+            this.props.dispatch(actions.login.initialStatus())   
+        }
         return (
             <div className='login'>
                 <Form onSubmit={this.handleSubmit} className="login-form">
@@ -121,7 +112,7 @@ class PCLogin extends React.Component {
                     </Form.Item>
                 </Form>
                 <div className="ui vertically divided grid">
-                    {entry}
+                    {/* {entry} */}
                 </div>
             </div>
 

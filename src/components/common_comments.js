@@ -17,7 +17,8 @@ const mapStateToProps = (state) => {
     
     return {
         comment: state.comment,
-        news: state.news
+        news: state.news,
+        login:state.login
     }
    
 }
@@ -26,7 +27,9 @@ class CommonComments extends React.Component {
         super(props);
         this.state = {
             comment: '',
-            news: props.news
+            news: props.news,
+            login:props.login.loginInfo
+
         };
     };
     componentDidMount() {
@@ -43,7 +46,7 @@ class CommonComments extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 var commentInfo = {
-                    userAccount: 'vip1988',
+                    userAccount: this.state.login.userAccount,
                     comment: values.comment,
                     article_id:this.props.article_id
                 }
@@ -55,7 +58,7 @@ class CommonComments extends React.Component {
     addUserCollection() {
         
         const collectionInfo={
-            userAccount:'vip1988',
+            userAccount:this.state.login.userAccount,
             article_id:this.props.article_id,
             article_title:this.props.article_title
         }

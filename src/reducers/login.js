@@ -20,9 +20,22 @@ const login = (state = initialState, action) => {
             status: action.status,
             loginInfo: action.loginInfo
         });
+        case 'LOGIN_CHECK':
+        return Object.assign({}, state, {
+            status: action.status,
+            loginInfo: action.loginInfo
+        });
+        case 'LOGOUT_CHECK':
+        return Object.assign({}, state, {
+            status: action.status,
+            loginInfo: action.loginInfo
+        });
+        case 'INIT_STATUS':
+        return Object.assign({}, state, {
+            status: action.status,
+        });
         default:
             return state
     }
 }
-
-export default login
+export default login 

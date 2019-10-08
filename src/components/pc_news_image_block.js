@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import actions from 'Source/actions'
 const config = require('config')
-const url ='http://localhost:3001/details/'
+const url ='/details/'
 const mapStateToProps = (state) => {
     return {
         news: state.news
@@ -37,14 +37,6 @@ class PCNewsImageBlock extends React.Component {
     }
 
     render() {
-        const gridStyle = {
-            width: '25%',
-            textAlign: 'center',
-        };
-
-        const styleCard = {
-            width: this.props.width
-        }
         const styleImage = {
             display: 'block',
             width: this.props.imageWidth,
@@ -57,16 +49,14 @@ class PCNewsImageBlock extends React.Component {
             overflow: 'hidden',
             textOverflow: 'ellipsis'
         }
-        // <Link to={`details/${newsItem._id}`} target='_blank'>
-        //console.log('state' + JSON.stringify(this.state.newsInfo))
         
+        //console.log('state' + JSON.stringify(this.state.newsInfo))
        
         const newsList = this.state.newsInfo.length
             ?
             this.state.newsInfo.map((newsItem, index) => (
-                <div key={index} className='imageBlock'>
-                    
-                    <Link to={`/details/${newsItem._id}`} >
+                <div key={index} className='imageBlock'>   
+                    <Link to={`/details/${newsItem._id}` }>
                         <div className='custom-image'>
                             <img alt='' style={styleImage} src={newsItem.imagePath} />
                         </div>

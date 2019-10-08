@@ -8,7 +8,14 @@ const getLogin = () => {
         })
     }
 }
-
+const initialStatus=()=>{
+    return async (dispatch, getState) => {
+        dispatch({
+            type: 'INIT_STATUS',
+            status:'normal'
+        })
+    }
+}
 const postLoginInfo = (conditions) => {
     return async (dispatch, getState) => {
         try {
@@ -20,32 +27,88 @@ const postLoginInfo = (conditions) => {
                 },
                 body: JSON.stringify({
                     userAccount: conditions.userAccount || undefined,
-                    userPassword: conditions.userPassword || undefined
+                    userPassword: conditions.userPassword || undefined,
+                    userLogin: conditions.userLogin || undefined
                 })
             })
-
             let res = await response.json()
-            
-            if(res.status=='account exits')
-            {
-                dispatch({
-                    type: 'LOGIN_CREATE',
-                    status: 'account error'
-                })
-
-
-
-            }
             if (res.status == 'success') {
                 dispatch({
                     type: 'LOGIN_CREATE',
                     status: 'success',
                     loginInfo: res.login
                 })
-            }else {
+            }
+            else {
                 dispatch({
                     type: 'LOGIN_CREAT',
-                    status: 'error'
+                    status: 'userAccount exits'
+                })
+            }
+        } catch(error) {
+            console.error('error', error)
+        }
+    }
+}
+const logout= (conditions) => {
+    return async (dispatch, getState) => {
+        try {
+            let response = await fetch(config.service.external_url + '/api/login/logout', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userAccount: conditions || undefined,
+                })
+            })
+            let res = await response.json()
+            if (res.status == 'success') {
+                dispatch({
+                    type: 'LOGOUT_CHECK',
+                    status: 'logout success',
+                    loginInfo: res.login
+                })
+            }
+            else {
+                dispatch({
+                    type: 'LOGIN_CHECK',
+                    status: 'logout error'
+                })
+            }
+        } catch(error) {
+            console.error('error', error)
+        }
+    }
+}
+const checkLoginInfo = (conditions) => {
+    return async (dispatch, getState) => {
+        try {
+            let response = await fetch(config.service.external_url + '/api/login/checkLoginInfo', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userAccount: conditions.userAccount || undefined,
+                    userPassword: conditions.userPassword || undefined,
+                    userLogin: conditions.userLogin || undefined
+                })
+            })
+            let res = await response.json()
+            if (res.status == 'success') {
+                dispatch({
+                    type: 'LOGIN_CHECK',
+                    status: 'check success',
+                    loginInfo: res.login
+                })
+            }
+            else {
+                dispatch({
+                    type: 'LOGIN_CHECK',
+                    status: 'check error'
                 })
             }
         } catch(error) {
@@ -87,7 +150,10 @@ const getLoginInfo = (conditions) => {
 export default {
     getLogin,
     getLoginInfo,
-    postLoginInfo
+    postLoginInfo,
+    checkLoginInfo,
+    initialStatus,
+    logout
 }
 
 

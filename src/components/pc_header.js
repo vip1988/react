@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux'
 import { Row, Col } from 'antd';
 import Logo from 'Source/images/news.png'
 import '../../node_modules/antd/dist/antd.css';
@@ -9,7 +10,14 @@ import {
     message, Form, Input,
     Button, CheckBox, Modal
 } from 'antd';
-export default class PCHeader extends React.Component {
+import actions from 'Source/actions'
+const { SubMenu } = Menu;
+const mapStateToProps = (state) => {
+    return {
+        login: state.login
+    }
+}
+class PCHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,13 +26,15 @@ export default class PCHeader extends React.Component {
             currentKey: '',
             modalVisible: false,
             action: 'login',
-            hasLogined: true,
+            hasLogined: props.login.loginInfo.userLogin,
             userNickName: '',
-            userid: 0
-
-
+            userid: 0,
+            login: props.login.loginInfo
         };
     };
+    componentWillMount() {
+        console.log('get' + JSON.stringify(this.state.login))
+    }
     setModalVisible(value) {
         this.setState({ modalVisible: value });
     };
@@ -42,19 +52,34 @@ export default class PCHeader extends React.Component {
         }
 
     }
+
+    logout() {
+        this.props.dispatch(actions.login.logout(this.state.login.userAccount))
+        alert('登出成功')
+        window.location.reload()
+    }
     render() {
 
         //let { getFieldProps } = this.props.form;
         var userShow = this.state.hasLogined
             ?
-
-            <Menu.Item key='logout' className='register'>
-                <Link to='/userCenter'>
-                    <Button key='primary' htmlType='button'>個人中心</Button>
-                </Link>
-                &nbsp;&nbsp;
-                    <Button key='ghost' htmlType='button'>登出</Button>
-            </Menu.Item>
+            <SubMenu title={
+                <span>
+                  <Icon type="appstore" />
+                  <span>{this.state.login.userAccount}</span>
+                </span>
+              }>
+                <Menu.Item key='logout' className='register'>
+                    <Link to='/userCenter'>
+                        <Button key='primary' htmlType='button'>個人中心</Button>
+                    </Link>
+                </Menu.Item>
+                <Menu.Item key='logout' className='register'>
+                    <Link to='/'>
+                        <Button key='ghost' htmlType='button' onClick={this.logout.bind(this)}>登出</Button>
+                    </Link>
+                </Menu.Item>
+            </SubMenu>
 
             :
             <Menu.Item key='register' className='register'>
@@ -109,7 +134,6 @@ export default class PCHeader extends React.Component {
                 </header>
             </div>
         )
-
     }
-
 }
+export default connect(mapStateToProps)(PCHeader)

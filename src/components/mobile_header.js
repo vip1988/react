@@ -21,7 +21,7 @@ class MobileHeader extends React.Component {
             currentKey: '',
             modalVisible: false,
             action: 'login',
-            hasLogined: true,
+            hasLogined: false,
             userNickName: '',
             userid: 0
         };
@@ -99,6 +99,17 @@ class MobileHeader extends React.Component {
                                         <input type='password' placeholder='請再次確認您的密碼'{...getFieldProps('r_confirmPassword')} />
                                     </FormItem>
                                     <Button type='primary' htmlType='submit'>註冊</Button>
+                                </Form>
+                            </TabPane>
+                            <TabPane tab='登入' key='3'>
+                                <Form horizontal onSubmit={this.handleSubmit.bind(this)}>
+                                    <FormItem label='帳戶'>
+                                        <input placeholder='請輸入您的帳號'{...getFieldProps('r_userName')} />
+                                    </FormItem>
+                                    <FormItem label='密碼'>
+                                        <input type='password' placeholder='請輸入您的密碼'{...getFieldProps('r_password')} />
+                                    </FormItem>
+                                    <Button type='primary' htmlType='submit'>登入</Button>
                                 </Form>
                             </TabPane>
                         </Tabs>

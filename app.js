@@ -30,6 +30,8 @@ const Login = require('./apis/login')
 
 router.get('/api/login/getAccountList', Login.getAccountList)
 router.post('/api/login/create', Login.create)
+router.post('/api/login/checkLoginInfo', Login.checkLoginInfo)
+router.post('/api/login/logout', Login.logout)
 
 const News = require('./apis/news')
 

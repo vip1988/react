@@ -21,9 +21,7 @@ class PCNewsBlock extends React.Component {
         }
     }
     componentWillMount() {
-
         this.props.dispatch(actions.news.getNewsCounts(this.props.counts))
-
     }
     componentWillReceiveProps = (nextProps) => {
         this.setState({

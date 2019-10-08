@@ -3,7 +3,9 @@ const collectionName = 'login'
 //建立資料型態
 var schema = mongoose.Schema({
     userAccount: String,
-    userPassword:Number
+    userPassword:Number,
+    userLogin:Boolean
+    
     
 	
 })
