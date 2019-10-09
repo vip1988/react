@@ -25,7 +25,7 @@ class PCNewsDetails extends React.Component {
             }
         }
     }
-    componentDidMount() {
+    componentWillMount() {
         console.log('id:' + this.props.match.params.id)
         if (this.props.match.params.id) {
             this.props.dispatch(actions.news.getArticle(this.props.match.params.id))
@@ -35,10 +35,10 @@ class PCNewsDetails extends React.Component {
         this.setState({
             article: nextProps.news.article
         })
+        this.props.dispatch(actions.news.getArticle(this.props.match.params.id))
     }
 
     render() {
-
         var __html;
         var imagePath;
         var title;

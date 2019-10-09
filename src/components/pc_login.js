@@ -25,9 +25,9 @@ class PCLogin extends React.Component {
 
         };
     }
-    // componentWillMount = () => {
-    //     this.props.dispatch(actions.login.getLoginInfo())
-    // }
+    componentWillMount = () => {
+        this.props.dispatch(actions.login.getLoginInfo())
+    }
     componentWillReceiveProps = (nextProps) => {
         this.setState({
             loginInfo: nextProps.login.loginInfo,
@@ -56,7 +56,6 @@ class PCLogin extends React.Component {
     };
     render() {
         const { getFieldDecorator } = this.props.form;
-        console.log(this.state.status)
         if(this.state.status=='userAccount exits')
         {
             alert('userAccount exits')
@@ -64,7 +63,7 @@ class PCLogin extends React.Component {
 
         if(this.state.status=='check success')
         {
-            alert('登入成功')
+            alert('登錄成功')
             //回首頁
            return <Redirect to={'/'} />
         }
@@ -108,11 +107,10 @@ class PCLogin extends React.Component {
                         <Button type="primary" htmlType="submit" className="login-form-button">
                             Log in
                      </Button>
-                        Or <a href="/">register now!</a>
+                        Or <a href="#/register">register now!</a>
                     </Form.Item>
                 </Form>
                 <div className="ui vertically divided grid">
-                    {/* {entry} */}
                 </div>
             </div>
 

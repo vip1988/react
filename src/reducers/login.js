@@ -1,34 +1,30 @@
 const initialState = {
     status:'normal',
-    loginInfo:[]
+    login:[]
     
 }
 
 const login = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOGIN_DATA':
-            return Object.assign({}, state, {
-                loginName: action.loginName
-            });
         case 'LOGIN_LIST':
         return Object.assign({}, state, {
             status: action.status,
-            loginInfo: action.loginInfo
+            login: action.login
         });
-        case 'LOGIN_CREAT':
+        case 'REGISTER_CREATE':
         return Object.assign({}, state, {
             status: action.status,
-            loginInfo: action.loginInfo
+            login: action.login
         });
         case 'LOGIN_CHECK':
         return Object.assign({}, state, {
             status: action.status,
-            loginInfo: action.loginInfo
+            login: action.login
         });
         case 'LOGOUT_CHECK':
         return Object.assign({}, state, {
             status: action.status,
-            loginInfo: action.loginInfo
+            login: action.login
         });
         case 'INIT_STATUS':
         return Object.assign({}, state, {

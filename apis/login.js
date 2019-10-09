@@ -1,23 +1,5 @@
 const { Login } = require('../models')
 
-const getOne = async (ctx, next) => {
-	if (!ctx.params.entryid) {
-        ctx.throw(404, 'create error')
-    }
-
-    var userid = ctx.params.userid
-
-	let login = await Login.findOne( { _id: userid } ).lean()
-
-	if (!login) {
-		ctx.throw(404, 'no such blog data')
-	}
-
-    ctx.body = {
-        status: 'success',
-        login: login
-    }
-}
 const getAccountList = async (ctx, next) => {
 	let login = await Login.find().sort( { updated: -1 } ).lean()
 
@@ -39,7 +21,6 @@ const exists = async (userAccount) => {
     return true
 }
 const logout = async (ctx, next) => {
-    console.log('account'+ctx.request.body.userAccount)
     let login = await Login.find({userAccount:ctx.request.body.userAccount}).lean()
     if (!login.length)
         {
@@ -51,7 +32,6 @@ const logout = async (ctx, next) => {
         else{
             let login = await Login.updateOne({'userAccount':ctx.request.body.userAccount},{$set:{"userLogin":false}})
             let getLogout = await Login.findOne( {'userAccount':ctx.request.body.userAccount} )
-            console.log('Info'+JSON.stringify(getLogout))
             ctx.body = {
                 status: 'success',
                 login: getLogout
@@ -77,52 +57,49 @@ const checkLoginInfo = async (ctx, next) => {
                 login: getLogin
             }
         }
-   
 }
-const create = async (ctx, next) => {
-    if (!ctx.request.body) {
-        ctx.throw(404, 'create error')
-    }
 
-    var payload = ctx.request.body
-    let exits = await exists(payload.userAccount)
-    if (exits) {
-        ctx.body = {
-            status: 'userAccount exits'
+    const registerCreate = async (ctx, next) => {
+        if (!ctx.request.body) {
+            ctx.throw(404, 'create error')
         }
-        return
-    }
-    
-        var data = {
-            userAccount: payload.userAccount,
-            userPassword: payload.userPassword,
-            userLogin: payload.userLogin
+        var payload = ctx.request.body
+        let exits = await exists(payload.userAccount)
+        if (exits) {
+            ctx.body = {
+                status: 'userAccount exits'
+            }
+            return
         }
+            var data = {
+                userAccount: payload.userAccount,
+                userPassword: payload.userPassword,
+                userConfirm:payload.userConfirm,
+                userEmail: payload.userEmail,
+                userPhoneNumber:payload.userPhoneNumber,
+                userLogin:payload.userLogin
+            }
+            var _login= new Login(data)
+            var error
         
-        var _login = new Login(data)
-        var error
+            _login.save((err) => {
+                error = err
+            })
+        
+            if (error) {
+                ctx.throw(404, 'create error' + error)
+            }
+        
+            ctx.body = {
+                status: 'success',
+                login: _login.toObject()
+            }
     
-        _login.save((err) => {
-            error = err
-        })
-    
-        if (error) {
-            ctx.throw(404, 'create error' + error)
         }
     
-        ctx.body = {
-            status: 'success',
-            login: _login.toObject()
-        }
-
-    }
-
-
-
 module.exports = {
-    getOne:getOne,
 	getAccountList: getAccountList,
-    create: create,
     checkLoginInfo:checkLoginInfo,
-    logout:logout
+    logout:logout,
+    registerCreate:registerCreate
 }

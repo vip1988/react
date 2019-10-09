@@ -26,15 +26,11 @@ class PCHeader extends React.Component {
             currentKey: '',
             modalVisible: false,
             action: 'login',
-            hasLogined: props.login.loginInfo.userLogin,
-            userNickName: '',
+            hasLogined: props.login.login.userLogin,
             userid: 0,
-            login: props.login.loginInfo
+            login: props.login.login
         };
     };
-    componentWillMount() {
-        console.log('get' + JSON.stringify(this.state.login))
-    }
     setModalVisible(value) {
         this.setState({ modalVisible: value });
     };

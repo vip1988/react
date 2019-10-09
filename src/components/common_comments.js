@@ -28,7 +28,7 @@ class CommonComments extends React.Component {
         this.state = {
             comment: '',
             news: props.news,
-            login:props.login.loginInfo
+            login:props.login.login
 
         };
     };

@@ -4,6 +4,9 @@ const collectionName = 'login'
 var schema = mongoose.Schema({
     userAccount: String,
     userPassword:Number,
+    userConfirm:Number,
+    userEmail:String,
+    userPhoneNumber:Number,
     userLogin:Boolean
     
     

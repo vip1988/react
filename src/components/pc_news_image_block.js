@@ -49,14 +49,14 @@ class PCNewsImageBlock extends React.Component {
             overflow: 'hidden',
             textOverflow: 'ellipsis'
         }
-        
+       
         //console.log('state' + JSON.stringify(this.state.newsInfo))
        
         const newsList = this.state.newsInfo.length
             ?
             this.state.newsInfo.map((newsItem, index) => (
                 <div key={index} className='imageBlock'>   
-                    <Link to={`/details/${newsItem._id}` }>
+                    <Link to={`/details/${newsItem._id}`}>
                         <div className='custom-image'>
                             <img alt='' style={styleImage} src={newsItem.imagePath} />
                         </div>
@@ -65,11 +65,9 @@ class PCNewsImageBlock extends React.Component {
                         </div>
                     </Link>
                 </div>
-
             ))
             :
             '沒有加載到任何新聞'
-
 
         return (
 

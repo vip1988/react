@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-
 import login from './login'
 import news from './news'
 import comment from './comment'
@@ -8,7 +7,8 @@ const app = combineReducers({
     login,
     news,
     comment,
-    collection
+    collection,
+    
     
 })
 

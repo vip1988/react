@@ -34,13 +34,9 @@ class PCNewsVideoBlock extends React.Component {
         this.setState({
             newsInfo: nextProps.news.newsInfo
         })
-
-
     }
 
     render() {
-
-
         return (
 
             <div className='videoBlock'>

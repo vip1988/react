@@ -43,12 +43,8 @@ class PCNewsBlock extends React.Component {
             ))
             :
             '沒有加載到任何新聞'
-            
-           
-        return (
-            
-            <div className='topNewsList'>
-               
+        return (     
+            <div className='topNewsList'>        
                 <Card>
                     <ul>
                         {newsList}
@@ -57,6 +53,5 @@ class PCNewsBlock extends React.Component {
             </div>
         )
     }
-
 }
 export default connect(mapStateToProps)(PCNewsBlock)
