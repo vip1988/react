@@ -94,7 +94,6 @@ const checkLoginInfo = (conditions) => {
                 })
             })
             let res = await response.json()
-            console.log('checklogin:'+JSON.stringify(res))
             if (res.status == 'success') {
                 dispatch({
                     type: 'LOGIN_CHECK',
