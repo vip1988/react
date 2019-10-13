@@ -8,8 +8,8 @@ import {
   message, Form, Input,
   Button, Checkbox, Modal
 } from 'antd';
-const config = require('config')
-const FormItem = Form.Item;
+
+
 const mapStateToProps = (state) => {
   return {
     login: state.login
@@ -17,27 +17,27 @@ const mapStateToProps = (state) => {
 }
 class PCForgetPassword extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      loginInfo: props.login.loginInfo,
-      status: props.login.status,
-      userLogin: false
+    super(props);{
 
-    };
-  }
-  componentWillMount = () => {
-    this.props.dispatch(actions.login.getLoginInfo())
+      this.state = {
+        login: props.login.login,
+        status: props.login.status,
+        userEmail:'',
+        userLogin: false
+  
+      };
+
+    }
+   
   }
   componentWillReceiveProps = (nextProps) => {
     this.setState({
-      loginInfo: nextProps.login.loginInfo,
-      status: nextProps.login.status
+      login: nextProps.login.login,
+      status: nextProps.login.status,
+      userEmail:nextProps.login.login.userEmail
     })
-  }
-  checkLogin(userInfo) {
-
-    this.props.dispatch(actions.login.checkLoginInfo(userInfo))
-
+    console.log('next:'+nextProps.login.login)
+    console.log('next:'+nextProps.login.login.userEmail)
   }
   handleSubmit = e => {
     e.preventDefault();
@@ -45,24 +45,55 @@ class PCForgetPassword extends React.Component {
       if (!err) {
 
         var userInfo = {
+          userEmail: values.usermail,
           userAccount: values.username,
-          userPassword: values.password,
-          userLogin: this.state.userLogin
+          userPassword: values.password
         }
-        this.checkLogin(userInfo)
-
+        //console.log('info'+JSON.stringify(userInfo))
+        this.props.dispatch(actions.login.checkForgotPassword(userInfo))
       }
     });
   };
+  sendMail(){
+    
+    
+    
+    alert(JSON.stringify(this.state.login))
+    
+    alert(typeof(this.state.login.userEmail))
+
+
+ localStorage.setItem('token','5d9e0ec05bc4d13ec5818b6e');
+//  var info ={
+//   token:'5d9e0ec05bc4d13ec5818b6e',
+//   userEmail:'memoryll2002@gmail.com'
+//  }
+    
+ var info ={
+  token:this.state.login._id,
+  userEmail:this.state.login.userEmail
+ }
+ alert(JSON.stringify(info))
+   // this.props.dispatch(actions.login.sendMail(info)) 
+  }
   render() {
+    
     const { getFieldDecorator } = this.props.form;
-    if (this.state.status == 'check success') {
-      alert('登錄成功')
-      //回首頁
+    if (this.state.status == 'forgot success') {
+      this.props.dispatch(actions.login.initialStatus())
+      this.sendMail();
+    }
+    if (this.state.status == 'forgot error') {
+      alert('查無此信箱')
+      this.props.dispatch(actions.login.initialStatus())
+    }
+    if (this.state.status == 'send success') {
+      alert('郵件發送成功')
+      this.props.dispatch(actions.login.initialStatus())
       return <Redirect to={'/'} />
     }
-    if (this.state.status == 'check error') {
-      alert('帳號密碼有誤')
+    if(this.state.status == 'send error'){
+      alert('郵件發送失敗')
       this.props.dispatch(actions.login.initialStatus())
     }
     return (
@@ -75,7 +106,7 @@ class PCForgetPassword extends React.Component {
             })(
               <Input
                 prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="usermail"
+                placeholder="Usermail"
               />,
             )}
           </Form.Item>

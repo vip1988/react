@@ -1,5 +1,6 @@
 const { Login } = require('../models')
-
+const nodemailer = require('nodemailer');
+const config = require('config')
 const getAccountList = async (ctx, next) => {
 	let login = await Login.find().sort( { updated: -1 } ).lean()
 
@@ -38,6 +39,56 @@ const logout = async (ctx, next) => {
             }
         } 
 }
+const sendMail = async (ctx, next) => {
+    console.log('account:'+config.email.account)
+    console.log('password:'+config.email.password)
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: config.email.account,
+            pass: config.email.password
+        }
+    });
+    var options = {
+        from: config.email.account, // sender address
+        to: ctx.request.body.userEmail, // list of receivers
+        subject: 'React-News ', // Subject line
+          text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
+          + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n'
+          + `http://localhost:3001/#/resetPassword/${ctx.request.body.token}\n\n`
+          + 'If you did not request this, please ignore this email and your password will remain unchanged.\n',
+    };
+    
+    //發送信件方法
+    transporter.sendMail(options, function(error, info){
+        if(error){
+            console.log(error); 
+            return    
+        }else{
+            console.log('訊息發送: ' + info.response);    
+        }
+    });
+        return ctx.body = {
+            status: 'success',
+        };
+   
+}
+const checkForgotPassword = async (ctx, next) => {
+    let login = await Login.find({userAccount: ctx.request.body.userAccount,userEmail:ctx.request.body.userEmail}).lean()  
+    if (!login.length)
+        {
+            ctx.body = {
+                status: 'error',
+                
+            }
+        }
+        else{
+            ctx.body = {
+                status: 'success',
+                login: login
+            }
+        }
+}
 const checkLoginInfo = async (ctx, next) => {
     let login = await Login.find({userAccount: ctx.request.body.userAccount,userPassword:ctx.request.body.userPassword}).lean()
     var payload = ctx.request.body
@@ -58,7 +109,27 @@ const checkLoginInfo = async (ctx, next) => {
             }
         }
 }
-
+const resetPassword = async (ctx, next) => {
+    let login = await Login.find({userAccount: ctx.request.body.userAccount}).lean()
+    var payload = ctx.request.body
+    if (!login.length)
+        {
+            ctx.body = {
+                status: 'error',
+                
+            }
+        }
+        else{
+            let login = await Login.updateOne({'userAccount':payload.userAccount},{$set:{"userPassword":payload.userPassword,"userConfirm":payload.userConfirm}})
+            if(login)
+            {
+                ctx.body = {
+                    status: 'success',
+                }
+            }
+           
+        }
+}
     const registerCreate = async (ctx, next) => {
         if (!ctx.request.body) {
             ctx.throw(404, 'create error')
@@ -101,5 +172,8 @@ module.exports = {
 	getAccountList: getAccountList,
     checkLoginInfo:checkLoginInfo,
     logout:logout,
-    registerCreate:registerCreate
+    registerCreate:registerCreate,
+    checkForgotPassword:checkForgotPassword,
+    sendMail:sendMail,
+    resetPassword:resetPassword
 }

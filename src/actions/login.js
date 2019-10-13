@@ -78,6 +78,39 @@ const registerCreate = (conditions) => {
         }
     }
 }
+const resetPassword = (conditions) => {
+    return async (dispatch, getState) => {
+        try {
+            let response = await fetch(config.service.external_url + '/api/login/resetPassword', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userAccount: conditions.userAccount || undefined,
+                    userPassword: conditions.userPassword || undefined,
+                    userConfirm: conditions.userConfirm || undefined
+                })
+            })
+            let res = await response.json()
+            if (res.status == 'success') {
+                dispatch({
+                    type: 'RESET_CHECK',
+                    status: 'reset success',
+                })
+            }
+            else {
+                dispatch({
+                    type: 'RESET_CHECK',
+                    status: 'reset error'
+                })
+            }
+        } catch(error) {
+            console.error('error', error)
+        }
+    }
+}
 const checkLoginInfo = (conditions) => {
     return async (dispatch, getState) => {
         try {
@@ -112,7 +145,73 @@ const checkLoginInfo = (conditions) => {
         }
     }
 }
-
+const sendMail = (conditions) => {
+    return async (dispatch, getState) => {
+        try {
+            let response = await fetch(config.service.external_url + '/api/login/sendMail', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userEmail: conditions.userEmail || undefined,
+                    token: conditions.token || undefined
+                })
+            })
+            let res = await response.json()
+            console.log('res:'+JSON.stringify(res))
+            if (res.status == 'success') {
+                dispatch({
+                    type: 'SEND_CHECK',
+                    status: 'send success',
+                })
+            }
+            else {
+                dispatch({
+                    type: 'SEND_CHECK',
+                    status: 'send error'
+                })
+            }
+        } catch(error) {
+            console.error('error', error)
+        }
+    }
+}
+const checkForgotPassword = (conditions) => {
+    return async (dispatch, getState) => {
+        try {
+            let response = await fetch(config.service.external_url + '/api/login/checkForgotPassword', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userAccount: conditions.userAccount || undefined,
+                    userPassword: conditions.userPassword || undefined,
+                    userEmail: conditions.userEmail || undefined
+                })
+            })
+            let res = await response.json()
+            if (res.status == 'success') {
+                dispatch({
+                    type: 'FORGOT_CHECK',
+                    status: 'forgot success',
+                    login: res.login
+                })
+            }
+            else {
+                dispatch({
+                    type: 'FORGOT_CHECK',
+                    status: 'forgot error'
+                })
+            }
+        } catch(error) {
+            console.error('error', error)
+        }
+    }
+}
 const getLoginInfo = (conditions) => {
     return async (dispatch, getState) => {
         try {
@@ -148,7 +247,10 @@ export default {
     checkLoginInfo,
     initialStatus,
     logout,
-    registerCreate
+    registerCreate,
+    checkForgotPassword,
+    sendMail,
+    resetPassword
 }
 
 

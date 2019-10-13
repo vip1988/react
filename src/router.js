@@ -6,6 +6,7 @@ import userCenter from 'Source/components/pc_userCenter.js'
 import MobileUserCenter from 'Source/components/mobile_userCenter.js'
 import Register from 'Source/components/pc_register.js'
 import ForgotPassword from 'Source/components/pc_forgotPassword.js'
+import ResetPassword from 'Source/components/pc_resetPassword.js'
 const routes = [
     {
         path: '/',
@@ -26,6 +27,11 @@ const routes = [
         path: '/forgotPassword',
         exact: true,
         component: ForgotPassword
+    },
+    {
+        path: '/resetPassword/:id',
+        exact: true,
+        component: ResetPassword
     },
     {
         path: '/details/:id',

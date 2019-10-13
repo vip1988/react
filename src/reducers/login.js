@@ -16,6 +16,15 @@ const login = (state = initialState, action) => {
             status: action.status,
             login: action.login
         });
+        case 'FORGOT_CHECK':
+        return Object.assign({}, state, {
+            status: action.status,
+            login: action.login
+        });
+        case 'RESET_CHECK':
+            return Object.assign({}, state, {
+                status: action.status,
+            });
         case 'LOGIN_CHECK':
         return Object.assign({}, state, {
             status: action.status,
@@ -25,6 +34,10 @@ const login = (state = initialState, action) => {
         return Object.assign({}, state, {
             status: action.status,
             login: action.login
+        });
+        case 'SEND_CHECK':
+        return Object.assign({}, state, {
+            status: action.status,
         });
         case 'INIT_STATUS':
         return Object.assign({}, state, {

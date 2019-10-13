@@ -19,18 +19,16 @@ class PCLogin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loginInfo: props.login.loginInfo,
             status:props.login.status,
             userLogin:false
 
         };
     }
-    componentWillMount = () => {
-        this.props.dispatch(actions.login.getLoginInfo())
-    }
+    // componentWillMount = () => {
+    //     this.props.dispatch(actions.login.getLoginInfo())
+    // }
     componentWillReceiveProps = (nextProps) => {
         this.setState({
-            loginInfo: nextProps.login.loginInfo,
             status:nextProps.login.status
         })
     }

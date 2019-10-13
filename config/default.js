@@ -11,5 +11,10 @@ module.exports = {
 	},
 	'login':{
 		'name':'Login'
+	},
+	'email':{
+		'account':'memoryll2002@gmail.com',
+		'password':'lcawbjjrentiyhrd'
 	}
+	
 };
